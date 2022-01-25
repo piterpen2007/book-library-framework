@@ -1,0 +1,32 @@
+{
+  "name" : "eff-tech/framework",
+  "description": "Electronic library. An example of an application",
+  "type": "library",
+  "homepage": "https://git.effective-team.ru/rnd/educational-projects/interns/2021-flow-1/fedyancev.d.a/book-library/-/tree/lesson_24-01-2022",
+  "readme": "readme",
+  "license": "proprietary",
+  "keywords": [
+    "framework",
+    "example",
+    "project",
+    "oop"
+  ],
+  "authors": [
+    {
+      "name": "Fedyancev Daniil",
+      "role": "developer"
+    }
+  ],
+  "support": {
+    "email": "popkin@yandex.ru"
+  },
+  "require": {
+    "php" : "^7.4 || ^8.0",
+    "ext-json": "*"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require-dev": {
+    "phpunit/phpunit": "9.*"
+  }
+}
