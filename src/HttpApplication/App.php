@@ -1,6 +1,7 @@
 <?php
 
 namespace EfTech\BookLibrary\Infrastructure\HttpApplication;
+
 use EfTech\BookLibrary\Infrastructure\Exception\RuntimeException;
 use EfTech\BookLibrary\Infrastructure\DI\ContainerInterface;
 use EfTech\BookLibrary\Infrastructure\http\httpResponse;
@@ -11,12 +12,12 @@ use EfTech\BookLibrary\Infrastructure\Router\RouterInterface;
 use Throwable;
 use EfTech\BookLibrary\Infrastructure\Exception;
 use EfTech\BookLibrary\Infrastructure\View\RenderInterface;
+
 /**
  * Ядро приложения
  */
 final class App
 {
-
     /** Конфиг приложения
      * @var AppConfigInterface|null
      */
@@ -104,7 +105,7 @@ final class App
     /**
      * @return ContainerInterface |null
      */
-    private function getContainer():ContainerInterface
+    private function getContainer(): ContainerInterface
     {
         if (null === $this->container) {
             $this->container = ($this->diContainerFactory)();
@@ -128,9 +129,9 @@ final class App
     /** Инициация обработки ошибок
      *
      */
-    private function initErrorHandling():void
+    private function initErrorHandling(): void
     {
-        set_error_handler(static function(int $errNom, string $errStr , $errFile, $errLine){
+        set_error_handler(static function (int $errNom, string $errStr, $errFile, $errLine) {
             throw new RuntimeException($errStr);
         });
     }
@@ -155,7 +156,7 @@ final class App
      * @param ServerRequest $serverRequest - объект серверного http запроса
      * @return httpResponse - реез ответ
      */
-    public function dispath(ServerRequest $serverRequest):httpResponse
+    public function dispath(ServerRequest $serverRequest): httpResponse
     {
         $hasAppConfig = false;
         try {
@@ -165,7 +166,7 @@ final class App
             $urlPath = $serverRequest->getUri()->getPath();
             $logger->info('Url request received' . $urlPath);
             $dispatcher = $this->getRouter()->getDispatcher($serverRequest);
-            if(is_callable($dispatcher)) {
+            if (is_callable($dispatcher)) {
                 $httpResponse = $dispatcher($serverRequest);
                 if (!($httpResponse instanceof httpResponse)) {
                     throw new Exception\UnexpectedValueException('Контроллер вернул некорректный результат');
@@ -216,13 +217,11 @@ final class App
     /** Тихое логгирование - если отправка данных пользователю закончилось ошибкой, то это никак не влияет
      * @param string $msg - сообщение в логи
      */
-    private function silentLog(string $msg):void
+    private function silentLog(string $msg): void
     {
         try {
             $this->logger->error($msg);
         } catch (Throwable $e) {
-
         }
     }
-
 }

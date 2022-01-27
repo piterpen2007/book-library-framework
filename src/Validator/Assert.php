@@ -1,6 +1,7 @@
 <?php
 
 namespace EfTech\BookLibrary\Infrastructure\Validator;
+
 /**
  * Коллекция методов реализющих разнообразные проверки в приложении
  */
@@ -15,7 +16,10 @@ final class Assert
     {
         $result = null;
         foreach ($listItemsToCheck as $paramName => $errMsg) {
-            if (array_key_exists($paramName, $dataForValidation) && false === is_string($dataForValidation[$paramName])) {
+            if (
+                array_key_exists($paramName, $dataForValidation)
+                && false === is_string($dataForValidation[$paramName])
+            ) {
                 $result = $errMsg;
                 break;
             }

@@ -6,7 +6,6 @@ use EfTech\BookLibrary\Infrastructure\Exception\RuntimeException;
 
 class PhtmlTemplate implements ViewTemplateInterface
 {
-
     /**
      * @inheritDoc
      */
@@ -15,7 +14,7 @@ class PhtmlTemplate implements ViewTemplateInterface
         if (false === file_exists($template)) {
             throw new RuntimeException("некорректный путь до шаблона '$template'");
         }
-        extract($context,EXTR_SKIP);
+        extract($context, EXTR_SKIP);
         unset($context);
         ob_start();
         require $template;

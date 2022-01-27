@@ -7,12 +7,10 @@ namespace EfTech\BookLibrary\Infrastructure\Logger\Adapter;
  */
 class NullAdapter implements \EfTech\BookLibrary\Infrastructure\Logger\AdapterInterface
 {
-
     /**
      * @inheritDoc
      */
     public function write(string $logLevel, string $msg): void
     {
-
     }
 }

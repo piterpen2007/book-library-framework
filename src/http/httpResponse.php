@@ -22,8 +22,7 @@ class httpResponse extends AbstractMessage
         ?string $body,
         int $statusCode,
         string $reasonPhrase
-    )
-    {
+    ) {
         parent::__construct($protocolVersion, $headers, $body);
         $this->statusCode = $statusCode;
         $this->reasonPhrase = $reasonPhrase;
@@ -44,5 +43,4 @@ class httpResponse extends AbstractMessage
     {
         return $this->reasonPhrase;
     }
-
 }

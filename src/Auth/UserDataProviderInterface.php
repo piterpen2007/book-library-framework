@@ -7,7 +7,7 @@ namespace EfTech\BookLibrary\Infrastructure\Auth;
  */
 interface UserDataProviderInterface
 {
-    public function getLogin():string;
+    public function getLogin(): string;
 
-    public function getPassword():string;
+    public function getPassword(): string;
 }

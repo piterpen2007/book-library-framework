@@ -41,13 +41,16 @@ final class RegExpRouter implements RouterInterface
         $dispatcher = null;
         foreach ($this->handlers as $pattern => $currentDispatcher) {
             $matches = [];
-            if (1 === preg_match($pattern, $urlPath,$matches)) {
-                if(is_callable($currentDispatcher)) {
+            if (1 === preg_match($pattern, $urlPath, $matches)) {
+                if (is_callable($currentDispatcher)) {
                     $dispatcher = $currentDispatcher;
-                } elseif (is_string($currentDispatcher) && is_subclass_of($currentDispatcher, ControllerInterface::class, true)) {
+                } elseif (
+                    is_string($currentDispatcher)
+                    && is_subclass_of($currentDispatcher, ControllerInterface::class, true)
+                ) {
                     $dispatcher = $this->controllerFactory->create($currentDispatcher);
                 }
-                if(null !== $dispatcher) {
+                if (null !== $dispatcher) {
                     $serverRequestAttributes = $this->buildServersRequestAttributes($matches);
                     $serverRequest->setAttributes($serverRequestAttributes);
                     break;
@@ -61,7 +64,7 @@ final class RegExpRouter implements RouterInterface
      * @param array $matches
      * @return array
      */
-    private function buildServersRequestAttributes(array $matches):array
+    private function buildServersRequestAttributes(array $matches): array
     {
         $attributes = [];
 
@@ -76,15 +79,13 @@ final class RegExpRouter implements RouterInterface
     /** Получать имя аттрибута
      * @param string $groupName
      */
-    private function buildAttrName(string $groupName):string
+    private function buildAttrName(string $groupName): string
     {
-        $clearAttrName = strtolower(substr($groupName,3,-3));
+        $clearAttrName = strtolower(substr($groupName, 3, -3));
 
-        $parts = explode('_',$clearAttrName);
+        $parts = explode('_', $clearAttrName);
 
-        $ucParts = array_map('ucfirst',$parts);
-        return lcfirst(implode('',$ucParts));
-
-
+        $ucParts = array_map('ucfirst', $parts);
+        return lcfirst(implode('', $ucParts));
     }
 }

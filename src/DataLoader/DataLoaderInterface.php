@@ -11,5 +11,5 @@ interface DataLoaderInterface
      * @param string $sourceName
      * @return array
      */
-    function loadData(string $sourceName): array;
+    public function loadData(string $sourceName): array;
 }

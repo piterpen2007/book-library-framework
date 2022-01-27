@@ -27,5 +27,4 @@ final class BufferOutput implements OutputInterface
     {
         return $this->buffer;
     }
-
 }

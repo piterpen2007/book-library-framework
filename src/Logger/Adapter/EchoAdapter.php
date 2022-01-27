@@ -4,7 +4,6 @@ namespace EfTech\BookLibrary\Infrastructure\Logger\Adapter;
 
 class EchoAdapter implements \EfTech\BookLibrary\Infrastructure\Logger\AdapterInterface
 {
-
     /**
      * @inheritDoc
      */

@@ -13,5 +13,5 @@ interface RenderInterface
      * @param httpResponse $httpResponse
      * @return void
      */
-    public function render (httpResponse $httpResponse):void;
+    public function render(httpResponse $httpResponse): void;
 }

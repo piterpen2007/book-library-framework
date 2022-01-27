@@ -102,50 +102,49 @@ class AppConsole
         });
     }
 
-    public function dispatch(string $commandName = null,array $params = null): void
+    public function dispatch(string $commandName = null, array $params = null): void
     {
         $output = null;
-        try{
-            $output =$this->getOutput();
+        try {
+            $output = $this->getOutput();
 
             $commandName = $commandName ?? $this->getCommandName();
-            if(null ===$commandName)
-            {
+            if (null === $commandName) {
                 throw new RuntimeException("Command name must be specified");
             }
-            if(false ===array_key_exists($commandName,$this->commands))
-            {
+            if (false === array_key_exists($commandName, $this->commands)) {
                 throw new RuntimeException("Unknown command: '$commandName'");
             }
 
-            if (false ===is_string($this->commands[$commandName]) ||false ===is_subclass_of
-                ($this->commands[$commandName], CommandInterface::class, true) )
-            {
+            if (
+                false === is_string($this->commands[$commandName]) || false === is_subclass_of(
+                    $this->commands[$commandName],
+                    CommandInterface::class,
+                    true
+                )
+            ) {
                 throw new RuntimeException("There is no valid handler for the command '$commandName'");
             }
             $command = $this->getDiContainer()->get($this->commands[$commandName]);
             $params = $params ?? $this ->getCommandParams($this->commands[$commandName]);
 
             $command($params);
-        }catch(Throwable $e)
-        {
-            $output = $output ??new EchoOutput();
+        } catch (Throwable $e) {
+            $output = $output ?? new EchoOutput();
             $output->print("Error: {$e->getMessage()}\n");
         }
-
     }
 
     /**
      * Возвращает имя команды
      * @return string|null
      */
-    private function getCommandName():?string
+    private function getCommandName(): ?string
     {
-        $options = getopt('',['command:']);
+        $options = getopt('', ['command:']);
         $command = null;
-        if(is_array($options) &&array_key_exists('command',$options)&&is_string($options['command']))
-        {
-            $command=$options['command'];
+        if (is_array($options) && array_key_exists('command', $options) && is_string($options['command'])) {
+            $command = $options['command'];
         }
         return $command;
     }
@@ -156,13 +155,12 @@ class AppConsole
      *
      * @return array
      */
-    private function getCommandParams(string $commandName):array
+    private function getCommandParams(string $commandName): array
     {
         $longOptions = call_user_func("$commandName::getLongOption");
         $shortOptions = call_user_func("$commandName::getShortOption");
-        $options = getopt($shortOptions,$longOptions);
+        $options = getopt($shortOptions, $longOptions);
 
-        return is_array($options)?$options:[];
+        return is_array($options) ? $options : [];
     }
-
 }

@@ -41,7 +41,7 @@ class Logger implements LoggerInterface
      */
     public function energency(string $message, array $context = []): void
     {
-        $this->log(LogLevel::ENERGENCY,$message,$context);
+        $this->log(LogLevel::ENERGENCY, $message, $context);
     }
 
     /**
@@ -50,7 +50,7 @@ class Logger implements LoggerInterface
      */
     public function alert(string $message, array $context = []): void
     {
-        $this->log(LogLevel::ALERT,$message,$context);
+        $this->log(LogLevel::ALERT, $message, $context);
     }
 
     /**
@@ -59,7 +59,7 @@ class Logger implements LoggerInterface
      */
     public function critical(string $message, array $context = []): void
     {
-        $this->log(LogLevel::CRITICAL,$message,$context);
+        $this->log(LogLevel::CRITICAL, $message, $context);
     }
 
     /**
@@ -68,7 +68,7 @@ class Logger implements LoggerInterface
      */
     public function error(string $message, array $context = []): void
     {
-        $this->log(LogLevel::ERROR,$message,$context);
+        $this->log(LogLevel::ERROR, $message, $context);
     }
 
     /**
@@ -77,7 +77,7 @@ class Logger implements LoggerInterface
      */
     public function warning(string $message, array $context = []): void
     {
-        $this->log(LogLevel::WARNING,$message,$context);
+        $this->log(LogLevel::WARNING, $message, $context);
     }
 
     /**
@@ -86,7 +86,7 @@ class Logger implements LoggerInterface
      */
     public function notice(string $message, array $context = []): void
     {
-        $this->log(LogLevel::NOTICE,$message,$context);
+        $this->log(LogLevel::NOTICE, $message, $context);
     }
 
     /**
@@ -95,7 +95,7 @@ class Logger implements LoggerInterface
      */
     public function info(string $message, array $context = []): void
     {
-        $this->log(LogLevel::INFO,$message,$context);
+        $this->log(LogLevel::INFO, $message, $context);
     }
 
     /**
@@ -104,7 +104,7 @@ class Logger implements LoggerInterface
      */
     public function debug(string $message, array $context = []): void
     {
-        $this->log(LogLevel::DEBUG,$message,$context);
+        $this->log(LogLevel::DEBUG, $message, $context);
     }
 
     /** Запись в логи сообщение
@@ -118,12 +118,10 @@ class Logger implements LoggerInterface
     {
         try {
             $this->validateLevel($level);
-            $formatMsg = $this->formatMsg($message,$context);
+            $formatMsg = $this->formatMsg($message, $context);
             $this->adapter->write($level, $formatMsg);
         } catch (\Throwable $e) {
-
         }
-
     }
 
     /** Форматирует сообщение
@@ -131,7 +129,7 @@ class Logger implements LoggerInterface
      * @param array $context
      * @return string
      */
-    private function formatMsg(string $message, array $context):string
+    private function formatMsg(string $message, array $context): string
     {
         $date = $this->formatDate();
         $ip = $this->formatIp();
@@ -145,9 +143,9 @@ class Logger implements LoggerInterface
     /** Валидация корректности уровня логирования
      * @param string $level
      */
-    private function validateLevel(string $level):void
+    private function validateLevel(string $level): void
     {
-        if(false === array_key_exists($level, self::ALLOWED_LEVEL)) {
+        if (false === array_key_exists($level, self::ALLOWED_LEVEL)) {
             throw new RuntimeException(
                 'Неподдерживаемый уровень логирования: ' . $level
             );
@@ -157,7 +155,7 @@ class Logger implements LoggerInterface
     /** Дата и время, когда произошло событие
      * @return string
      */
-    private function formatDate():string
+    private function formatDate(): string
     {
         return (new \DateTimeImmutable())->format('d/M/Y:H:i:s O');
     }
@@ -165,7 +163,7 @@ class Logger implements LoggerInterface
     /** Возвращает строку с информацией о клиенте вызвавшим событие
      * @return string
      */
-    private function formatIp():string
+    private function formatIp(): string
     {
         if (isset($_SERVER['REMOTE_ADDR'])) {
             $ip = $_SERVER['REMOTE_ADDR'];
@@ -177,15 +175,13 @@ class Logger implements LoggerInterface
         return $ip;
     }
 
-    private function formatContext(array $context):string
+    private function formatContext(array $context): string
     {
-        if (count($context) >0) {
-            $contextStr = print_r($context,true);
+        if (count($context) > 0) {
+            $contextStr = print_r($context, true);
         } else {
             $contextStr = '';
         }
         return $contextStr;
     }
-
-
 }

@@ -4,7 +4,6 @@ namespace EfTech\BookLibrary\Infrastructure\HttpApplication;
 
 class AppConfig implements AppConfigInterface
 {
-
     /** Скрывает сообщения о ошибках
      * @var bool
      */

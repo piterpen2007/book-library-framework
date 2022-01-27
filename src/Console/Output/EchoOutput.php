@@ -7,7 +7,6 @@ namespace EfTech\BookLibrary\Infrastructure\Console\Output;
  */
 final class EchoOutput implements OutputInterface
 {
-
     /**
      * @inheritDoc
      */

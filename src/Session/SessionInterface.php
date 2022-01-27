@@ -11,7 +11,7 @@ interface SessionInterface
      * @param string $key
      * @return bool
      */
-    public function has(string $key):bool;
+    public function has(string $key): bool;
     /** Возвращает данные из сессии по заданому ключу
      * @param string $key
      * @return mixed
@@ -22,5 +22,5 @@ interface SessionInterface
      * @param mixed $value - Значения сохранямые в сессии
      * @return $this
      */
-    public function set(string $key,$value):self;
+    public function set(string $key, $value): self;
 }

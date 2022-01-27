@@ -31,7 +31,7 @@ class ServiceManager implements ContainerInterface
         $this->registerFactories(...$factories);
     }
 
-    private function registerFactories(callable ...$factories):void
+    private function registerFactories(callable ...$factories): void
     {
         $this->factories = $factories;
     }
@@ -42,9 +42,9 @@ class ServiceManager implements ContainerInterface
      */
     public function get(string $serviceName)
     {
-        if (array_key_exists($serviceName,$this->instances)) {
+        if (array_key_exists($serviceName, $this->instances)) {
             $service = $this->instances[$serviceName];
-        } elseif (array_key_exists($serviceName,$this->factories)) {
+        } elseif (array_key_exists($serviceName, $this->factories)) {
             $service = ($this->factories[$serviceName])($this);
             $this->instances[$serviceName] = $service;
         } else {

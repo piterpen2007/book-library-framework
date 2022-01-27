@@ -11,5 +11,5 @@ interface UserDataStorageInterface
      * @param string $login
      * @return UserDataProviderInterface
      */
-    public function findUserByLogin(string $login):?UserDataProviderInterface;
+    public function findUserByLogin(string $login): ?UserDataProviderInterface;
 }

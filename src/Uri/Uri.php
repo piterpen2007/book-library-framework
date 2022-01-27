@@ -53,7 +53,7 @@ final class Uri
         ?int $port = null,
         string $path = '',
         string $query = '',
-        string $userInfo =  '',
+        string $userInfo = '',
         string $fragment = ''
     ) {
         $this->schema = $schema;
@@ -136,22 +136,22 @@ final class Uri
      * @param string $uri
      * @return Uri
      */
-    public static function createFromString(string $uri):Uri
+    public static function createFromString(string $uri): Uri
     {
         $urlParts = parse_url($uri);
         if (false === is_array($urlParts)) {
             throw new ErrorUrlException("ошибка разбора строки '$uri' на составные части");
         }
-        $schema = array_key_exists('scheme',$urlParts) ? $urlParts['scheme'] : '';
-        $host = array_key_exists('host',$urlParts) ? $urlParts['host'] : '';
+        $schema = array_key_exists('scheme', $urlParts) ? $urlParts['scheme'] : '';
+        $host = array_key_exists('host', $urlParts) ? $urlParts['host'] : '';
         $port = $urlParts['port'] ?? null;
         $userInfo = array_key_exists('user', $urlParts) ? $urlParts['user'] : '';
-        if(array_key_exists('pass',$urlParts)) {
+        if (array_key_exists('pass', $urlParts)) {
             $userInfo .= ":{$urlParts['pass']}";
         }
-        $query = array_key_exists('query',$urlParts) ? $urlParts['query'] : '';
-        $path = array_key_exists('path',$urlParts) ? $urlParts['path'] : '';
-        $fragment = array_key_exists('fragment',$urlParts) ? $urlParts['fragment'] : '';
+        $query = array_key_exists('query', $urlParts) ? $urlParts['query'] : '';
+        $path = array_key_exists('path', $urlParts) ? $urlParts['path'] : '';
+        $fragment = array_key_exists('fragment', $urlParts) ? $urlParts['fragment'] : '';
 
         return new Uri(
             $schema,
@@ -163,5 +163,4 @@ final class Uri
             $fragment
         );
     }
-
 }

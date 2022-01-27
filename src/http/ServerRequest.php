@@ -41,11 +41,11 @@ class ServerRequest extends httpRequest
     /** Возвращает параметры запроса
      * @return array
      */
-    public function getQueryParams():array
+    public function getQueryParams(): array
     {
-        if(null === $this->queryParams) {
+        if (null === $this->queryParams) {
             $queryParams = [];
-            parse_str($this->getUri()->getQuery(),$queryParams);
+            parse_str($this->getUri()->getQuery(), $queryParams);
             $this->queryParams = $queryParams;
         }
 

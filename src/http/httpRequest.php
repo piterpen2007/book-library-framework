@@ -35,8 +35,7 @@ class httpRequest extends AbstractMessage
         Uri $uri,
         array $headers,
         ?string $body
-    )
-    {
+    ) {
         parent::__construct($protocolVersion, $headers, $body);
         $this->method = $method;
         $this->requestTarget = $requestTarget;
@@ -66,8 +65,4 @@ class httpRequest extends AbstractMessage
     {
         return $this->uri;
     }
-
-
-
-
 }

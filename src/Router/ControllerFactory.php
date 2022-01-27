@@ -24,7 +24,7 @@ class ControllerFactory
      * @param string $controllerClassName имя класса создаваемого контроллера
      * @return ControllerInterface
      */
-    public function create(string $controllerClassName):ControllerInterface
+    public function create(string $controllerClassName): ControllerInterface
     {
         return $this->diContainer->get($controllerClassName);
     }

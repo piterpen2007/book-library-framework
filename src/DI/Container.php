@@ -41,12 +41,11 @@ final class Container implements ContainerInterface
      */
     public function get(string $serviceName)
     {
-        if (array_key_exists($serviceName,$this->instances)) {
+        if (array_key_exists($serviceName, $this->instances)) {
             $service = $this->instances[$serviceName];
-        } elseif (array_key_exists($serviceName,$this->services)) {
+        } elseif (array_key_exists($serviceName, $this->services)) {
                 $service = $this->createService($serviceName);
-        }
-        elseif (array_key_exists($serviceName,$this->factories)) {
+        } elseif (array_key_exists($serviceName, $this->factories)) {
             $service = ($this->factories[$serviceName])($this);
             $this->instances[$serviceName] = $service;
         } else {
@@ -59,13 +58,13 @@ final class Container implements ContainerInterface
      * @param array $diConfig - di конфиг
      * @return Container
      */
-    public static function createFromArray(array $diConfig):Container
+    public static function createFromArray(array $diConfig): Container
     {
-        $instances = array_key_exists('instances',$diConfig) ? $diConfig['instances'] : [];
-        $factories = array_key_exists('factories',$diConfig) ? $diConfig['factories'] : [];
-        $services = array_key_exists('services',$diConfig) ? $diConfig['services'] : [];
+        $instances = array_key_exists('instances', $diConfig) ? $diConfig['instances'] : [];
+        $factories = array_key_exists('factories', $diConfig) ? $diConfig['factories'] : [];
+        $services = array_key_exists('services', $diConfig) ? $diConfig['services'] : [];
 
-        return new self($instances,$services, $factories);
+        return new self($instances, $services, $factories);
     }
 
     /** Создание сервиса

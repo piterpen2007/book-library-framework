@@ -1,6 +1,7 @@
 <?php
 
 namespace EfTech\BookLibrary\Infrastructure\ViewTemplate;
+
 /**
  *  Интерфейс шаблонизаторов html
  */
@@ -11,5 +12,5 @@ interface ViewTemplateInterface
      * @param array $context - данные для рендеринга
      * @return string - результат рендеринга
      */
-    public function render(string $template,array $context):string;
+    public function render(string $template, array $context): string;
 }

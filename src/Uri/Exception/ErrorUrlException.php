@@ -1,6 +1,7 @@
 <?php
 
 namespace EfTech\BookLibrary\Infrastructure\Uri\Exception;
+
 use EfTech\BookLibrary\Infrastructure\Exception\RuntimeException;
 
 /**
@@ -8,5 +9,4 @@ use EfTech\BookLibrary\Infrastructure\Exception\RuntimeException;
  */
 class ErrorUrlException extends RuntimeException
 {
-
 }

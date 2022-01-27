@@ -27,12 +27,11 @@ class ServerResponseFactory
      * @param $data
      * @return httpResponse
      */
-    public static function createJsonResponse(int $code, $data):httpResponse
+    public static function createJsonResponse(int $code, $data): httpResponse
     {
         try {
-
             $body = json_encode($data, JSON_THROW_ON_ERROR);
-            if ( false === array_key_exists($code, self::PHRASES)) {
+            if (false === array_key_exists($code, self::PHRASES)) {
                 throw new RuntimeException('Некорректный код ответа');
             }
 
@@ -42,13 +41,13 @@ class ServerResponseFactory
             $code = 520;
             $phrases = 'Unknown error';
         }
-        return new httpResponse('1.1', ['Content-Type' => 'application/json'],$body, $code  ,$phrases);
+        return new httpResponse('1.1', ['Content-Type' => 'application/json'], $body, $code, $phrases);
     }
 
-    public static function createHtmlResponse(int $code,string $html):httpResponse
+    public static function createHtmlResponse(int $code, string $html): httpResponse
     {
         try {
-            if ( false === array_key_exists($code, self::PHRASES)) {
+            if (false === array_key_exists($code, self::PHRASES)) {
                 throw new RuntimeException('Некорректный код ответа');
             }
             $phrases = self::PHRASES[$code];
@@ -56,11 +55,10 @@ class ServerResponseFactory
             $html = '<h1>Unknown Error</h1>>';
             $code = 520;
             $phrases = 'Unknown Error';
-
         }
-        return new httpResponse('1.1', ['Content-Type' => 'text/html'],$html, $code, $phrases );
+        return new httpResponse('1.1', ['Content-Type' => 'text/html'], $html, $code, $phrases);
     }
-    public static function redirect(Uri $uri,int $httpCode = 302):httpResponse
+    public static function redirect(Uri $uri, int $httpCode = 302): httpResponse
     {
         try {
             if (!($httpCode >= 300 && $httpCode < 400)) {
@@ -78,7 +76,6 @@ class ServerResponseFactory
             $phrases = 'Unknown Error';
             $headers = ['Content-Type' => 'text/html'];
         }
-        return new httpResponse('1.1', $headers,$body, $httpCode, $phrases );
+        return new httpResponse('1.1', $headers, $body, $httpCode, $phrases);
     }
-
 }

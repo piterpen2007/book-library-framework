@@ -53,7 +53,7 @@ class SessionNative implements SessionInterface
     /** Создаёт сессию
      * @return SessionInterface
      */
-    public static function create():SessionInterface
+    public static function create(): SessionInterface
     {
         $sessionStatus = session_status();
         if (PHP_SESSION_DISABLED === $sessionStatus) {

@@ -37,11 +37,13 @@ final class DefaultRouter implements RouterInterface
 
 
         $dispatcher = null;
-        if (array_key_exists($urlPath,$this->handlers)) {
-            if(is_callable($this->handlers[$urlPath])) {
+        if (array_key_exists($urlPath, $this->handlers)) {
+            if (is_callable($this->handlers[$urlPath])) {
                 $dispatcher = $this->handlers[$urlPath];
-            } elseif (is_string($this->handlers[$urlPath]) &&
-                is_subclass_of($this->handlers[$urlPath], ControllerInterface::class, true)) {
+            } elseif (
+                is_string($this->handlers[$urlPath]) &&
+                is_subclass_of($this->handlers[$urlPath], ControllerInterface::class, true)
+            ) {
                 $dispatcher = $this->controllerFactory->create($this->handlers[$urlPath]);
             }
         }

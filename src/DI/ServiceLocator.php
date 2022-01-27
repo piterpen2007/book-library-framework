@@ -1,6 +1,6 @@
 <?php
-namespace EfTech\BookLibrary\Infrastructure\DI;
 
+namespace EfTech\BookLibrary\Infrastructure\DI;
 
 use EfTech\BookLibrary\Infrastructure\Exception\RuntimeException;
 
@@ -33,6 +33,4 @@ class ServiceLocator implements ContainerInterface
         }
         return $this->instances[$serviceName];
     }
-
-
 }

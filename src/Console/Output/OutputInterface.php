@@ -10,5 +10,5 @@ interface OutputInterface
     /** Выводит информацию в консоли
      * @param string $text
      */
-    public function print(string $text):void;
+    public function print(string $text): void;
 }
