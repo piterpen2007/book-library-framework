@@ -25,6 +25,9 @@
   "support": {
     "email": "popkin@yandex.ru"
   },
+  "provide": {
+    "psr/container-implementation": "1.1"
+  },
   "require": {
     "php" : "^7.4 || ^8.0",
     "ext-json": "*",
