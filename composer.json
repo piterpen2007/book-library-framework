@@ -27,7 +27,8 @@
   },
   "require": {
     "php" : "^7.4 || ^8.0",
-    "ext-json": "*"
+    "ext-json": "*",
+    "psr/container": "^1.1.2"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
