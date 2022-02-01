@@ -16,7 +16,7 @@ class SymfonyDiContainerInit
      * @var string
      */
     private string $path;
-    private array $parametrs;
+    private array $parameters;
 
     /**
      * @param string $path
