@@ -16,13 +16,16 @@ class SymfonyDiContainerInit
      * @var string
      */
     private string $path;
+    private array $parametrs;
 
     /**
      * @param string $path
+     * @param array $parameters
      */
-    public function __construct(string $path)
+    public function __construct(string $path, array $parameters = [])
     {
         $this->path = $path;
+        $this->parameters = $parameters;
     }
 
     /** Логика создания di контейнера symfony
@@ -34,7 +37,9 @@ class SymfonyDiContainerInit
         $containerBuilder = new class extends ContainerBuilder implements ContainerInterface
         {
         };
-        $containerBuilder->setParameter('kernel.project_dir', __DIR__ . '/../../../../../');
+        foreach ($this->parameters as $parameterName => $parameterValue) {
+            $containerBuilder->setParameter('kernel.project_dir', __DIR__ . '/../../../../../');
+        }
         $loader = new XmlFileLoader($containerBuilder, new FileLocator());
         $loader->load($this->path);
 
