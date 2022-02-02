@@ -38,7 +38,8 @@ class SymfonyDiContainerInit
         {
         };
         foreach ($this->parameters as $parameterName => $parameterValue) {
-            $containerBuilder->setParameter('kernel.project_dir', __DIR__ . '/../../../../../');
+            $containerBuilder->setParameter($parameterName, $parameterValue);
+            //$containerBuilder->setParameter('kernel.project_dir', __DIR__ . '/../../../../../');
         }
         $loader = new XmlFileLoader($containerBuilder, new FileLocator());
         $loader->load($this->path);
