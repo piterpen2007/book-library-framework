@@ -33,6 +33,7 @@
     "ext-json": "*",
     "psr/container": "^1.1.2",
     "symfony/dependency-injection": "^5.4",
+    "symfony/expression-language": "^5.4",
     "symfony/config": "^5.4"
   },
   "minimum-stability": "dev",
