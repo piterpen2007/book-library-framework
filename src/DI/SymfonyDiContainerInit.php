@@ -3,11 +3,13 @@
 namespace EfTech\BookLibrary\Infrastructure\DI;
 
 use EfTech\BookLibrary\Infrastructure\DI\SymfonyDiContainerInit\CacheParams;
+use EfTech\BookLibrary\Infrastructure\Exception\RuntimeException;
 use Exception;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use EfTechBookLibraryCachedContainer;
 
 /**
  *  Компонент инициализирующий di контайнер symfony
@@ -64,15 +66,32 @@ class SymfonyDiContainerInit
      */
     public function __invoke(): ContainerInterface
     {
-        $containerBuilder = self::createContainerBuilder($this->path, $this->parameters);
-        $containerBuilder->compile();
+        if (true === $this->cacheParams->isEnableFlag()) {
+            $pathToCacheFile = $this->cacheParams->getPathToCacheFile();
+            $isCached = false;
+            if (file_exists($pathToCacheFile)) {
+                require_once $pathToCacheFile;
+                $isCached = class_exists('EfTechBookLibraryCachedContainer');
+            }
 
-        if (true === $this->cacheParams->getPathToCacheFile()) {
-            $dumper = new PhpDumper($containerBuilder);
-            file_put_contents(
-                $this->cacheParams->getPathToCacheFile(),
-                $dumper->dump(['class' => 'EfTechBookLibraryCachedContainer'])
-            );
+            if ($isCached) {
+                $containerBuilder = new class extends EfTechBookLibraryCachedContainer implements
+                    ContainerInterface
+                {
+                };
+            } else {
+                $containerBuilder = self::createContainerBuilder($this->path, $this->parameters);
+                $containerBuilder->compile();
+
+                $dumper = new PhpDumper($containerBuilder);
+                file_put_contents(
+                    $pathToCacheFile,
+                    $dumper->dump(['class' => 'EfTechBookLibraryCachedContainer'])
+                );
+            }
+        } else {
+            $containerBuilder = self::createContainerBuilder($this->path, $this->parameters);
+            $containerBuilder->compile();
         }
 
         return $containerBuilder;
