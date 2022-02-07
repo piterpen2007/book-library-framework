@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation = "http://symfony.com/schema/dic/services  http://symfony.com/schema/dic/services/services-1.0.xsd"
+>
+<services>
+    <prototype namespace="EfTech\BookLibrary\Infrastructure\Router\" resource="./../" autowire="true"/>
+    <instanceof id="EfTech\BookLibrary\Infrastructure\Router\RouterInterface" public="true" autowire="true">
+        <bind key="string $controllerNs">%efftech.router.controllerNs%</bind>
+    </instanceof>
+
+
+    <service id="EfTech\BookLibrary\Infrastructure\Router\ControllerFactory">
+        <argument key="$diContainer" type="service" id="service_container"/>
+    </service>
+
+    <service id="EfTech\BookLibrary\Infrastructure\Router\DefaultRouter">
+        <argument key="$handlers">%efftech.router.default.handlers%</argument>
+    </service>
+
+    <service id="EfTech\BookLibrary\Infrastructure\Router\RegExpRouter">
+        <argument key="$handlers">%efftech.router.reqExp.handlers%</argument>
+    </service>
+
+    <service id="EfTech\BookLibrary\Infrastructure\Router\ChainRouters">
+        <argument type="service" id="EfTech\BookLibrary\Infrastructure\Router\DefaultRouter"/>
+        <argument type="service" id="EfTech\BookLibrary\Infrastructure\Router\RegExpRouter"/>
+        <argument type="service" id="EfTech\BookLibrary\Infrastructure\Router\UniversalRouter"/>
+    </service>
+
+
+    <service id="EfTech\BookLibrary\Infrastructure\Router\RouterInterface"
+             alias="EfTech\BookLibrary\Infrastructure\Router\ChainRouters" public="true">
+    </service>
+
+</services>
+
+
+</container>

@@ -3,7 +3,7 @@
 namespace EfTech\BookLibrary\Infrastructure\DI;
 
 use EfTech\BookLibrary\Infrastructure\DI\SymfonyDiContainerInit\CacheParams;
-use EfTech\BookLibrary\Infrastructure\Exception\RuntimeException;
+use EfTech\BookLibrary\Infrastructure\Router\SymfonyDi\DiRouterExt;
 use Exception;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -50,13 +50,19 @@ class SymfonyDiContainerInit
         $containerBuilder = new class extends ContainerBuilder implements ContainerInterface
         {
         };
+        $containerBuilder->registerExtension(new DiRouterExt());
         foreach ($parameters as $parameterName => $parameterValue) {
             $containerBuilder->setParameter($parameterName, $parameterValue);
             //$containerBuilder->setParameter('kernel.project_dir', __DIR__ . '/../../../../../');
         }
+
         $loader = new XmlFileLoader($containerBuilder, new FileLocator());
         $loader->load($path);
 
+        $xmlConfig = glob(dirname($path) . '/*.di.config.xml');
+        foreach ($xmlConfig as $pathToExtensionConfig) {
+            $loader->load($pathToExtensionConfig);
+        }
         return $containerBuilder;
     }
 
