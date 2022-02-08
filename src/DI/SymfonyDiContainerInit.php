@@ -3,6 +3,7 @@
 namespace EfTech\BookLibrary\Infrastructure\DI;
 
 use EfTech\BookLibrary\Infrastructure\DI\SymfonyDiContainerInit\CacheParams;
+use EfTech\BookLibrary\Infrastructure\DI\SymfonyDiContainerInit\ContainerParams;
 use EfTech\BookLibrary\Infrastructure\Router\SymfonyDi\DiRouterExt;
 use Exception;
 use Symfony\Component\Config\FileLocator;
@@ -26,40 +27,43 @@ class SymfonyDiContainerInit
      */
     private CacheParams $cacheParams;
 
+    private ContainerParams $containerParams;
+
     /**
-     * @param string $path
-     * @param array $parameters
+     * @param ContainerParams $containerParams
      * @param CacheParams|null $cacheParams
      */
-    public function __construct(string $path, array $parameters = [], CacheParams $cacheParams = null)
+    public function __construct(ContainerParams $containerParams, CacheParams $cacheParams = null)
     {
-        $this->path = $path;
-        $this->parameters = $parameters;
+        $this->containerParams = $containerParams;
         $this->cacheParams = $cacheParams ?? new CacheParams(false);
     }
 
     /** Фабрика  реализующая логику создания di контайнера symfony
      *
-     * @param string $path путь до xml конфига di контайнера symfony
-     * @param array $parameters
+     * @param ContainerParams $containerParams
      * @return ContainerBuilder|ContainerInterface
      * @throws Exception
      */
-    public static function createContainerBuilder(string $path, array $parameters): ContainerBuilder
+    public static function createContainerBuilder(ContainerParams $containerParams): ContainerBuilder
     {
         $containerBuilder = new class extends ContainerBuilder implements ContainerInterface
         {
         };
-        $containerBuilder->registerExtension(new DiRouterExt());
-        foreach ($parameters as $parameterName => $parameterValue) {
+        //$containerBuilder->registerExtension(new DiRouterExt());
+
+        foreach ($containerParams->getExtensions() as $extension) {
+            $containerBuilder->registerExtension($extension);
+        }
+
+        foreach ($containerParams->getParameters() as $parameterName => $parameterValue) {
             $containerBuilder->setParameter($parameterName, $parameterValue);
-            //$containerBuilder->setParameter('kernel.project_dir', __DIR__ . '/../../../../../');
         }
 
         $loader = new XmlFileLoader($containerBuilder, new FileLocator());
-        $loader->load($path);
+        $loader->load($containerParams->getPaths());
 
-        $xmlConfig = glob(dirname($path) . '/*.di.config.xml');
+        $xmlConfig = glob(dirname($containerParams->getPaths()) . '/*.di.config.xml');
         foreach ($xmlConfig as $pathToExtensionConfig) {
             $loader->load($pathToExtensionConfig);
         }
@@ -86,7 +90,9 @@ class SymfonyDiContainerInit
                 {
                 };
             } else {
-                $containerBuilder = self::createContainerBuilder($this->path, $this->parameters);
+                $containerBuilder = self::createContainerBuilder(
+                    $this->containerParams
+                );
                 $containerBuilder->compile();
 
                 $dumper = new PhpDumper($containerBuilder);
@@ -96,7 +102,9 @@ class SymfonyDiContainerInit
                 );
             }
         } else {
-            $containerBuilder = self::createContainerBuilder($this->path, $this->parameters);
+            $containerBuilder = self::createContainerBuilder(
+                $this->containerParams
+            );
             $containerBuilder->compile();
         }
 

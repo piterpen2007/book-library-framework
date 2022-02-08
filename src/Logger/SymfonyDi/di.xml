@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
+>
+    <services>
+        <prototype namespace="EfTech\BookLibrary\Infrastructure\Logger\" resource="./../" autowire="true"/>
+
+
+
+        <service
+                id="EfTech\BookLibrary\Infrastructure\Logger\LoggerInterface"
+                alias="EfTech\BookLibrary\Infrastructure\Logger\Logger"
+                public="true"
+        >
+
+        </service>
+        <service id="EfTech\BookLibrary\Infrastructure\Logger\Adapter\FileAdapter">
+            <argument key="$pathToFile">%efftech.logger.fileAdapter.pathToFile%</argument>
+        </service>
+
+        <service id="EfTech\BookLibrary\Infrastructure\Logger\AdapterInterface"
+                 alias="EfTech\BookLibrary\Infrastructure\Logger\Adapter\FileAdapter">
+        </service>
+
+    </services>
+</container>

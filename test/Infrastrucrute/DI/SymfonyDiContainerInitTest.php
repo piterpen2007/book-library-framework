@@ -18,7 +18,11 @@ class SymfonyDiContainerInitTest extends TestCase
     public function testCreateDiContainer(): void
     {
         //Arrange
-        $symfonyDiContainerInit = new SymfonyDiContainerInit(__DIR__ . '/test-data/empty-di.xml');
+        $symfonyDiContainerInit = new SymfonyDiContainerInit(
+            new SymfonyDiContainerInit\ContainerParams(
+                __DIR__ . '/test-data/empty-di.xml',
+            )
+        );
 
         //Act
         $actualResult = $symfonyDiContainerInit();

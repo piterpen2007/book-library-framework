@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:e_lgr="https://effective-group.ru/schema/dic/eff_tech_infrastructure_logger"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd" >
+
+
+    <e_lgr:config>
+        <e_lgr:fileLogger>
+            <e_lgr:pathToFile>%kernel.project_dir%/var/log/app.log%</e_lgr:pathToFile>
+        </e_lgr:fileLogger>
+    </e_lgr:config>
+<services>
+    <service id="EfTech\BookLibrary\Infrastructure\Logger\AdapterInterface"
+             alias="EfTech\BookLibrary\Infrastructure\Logger\Adapter\FileAdapter">
+    </service>
+</services>
+</container>
