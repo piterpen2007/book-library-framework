@@ -35,7 +35,8 @@
     "symfony/dependency-injection": "^5.4",
     "symfony/expression-language": "^5.4",
     "psr/http-message": "^1.0",
-    "symfony/config": "^5.4"
+    "symfony/config": "^5.4",
+    "psr/http-message-implementation": "^1.0"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,

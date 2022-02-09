@@ -2,14 +2,14 @@
 
 namespace EfTech\BookLibrary\Infrastructure\View;
 
-use EfTech\BookLibrary\Infrastructure\http\httpResponse;
+use Psr\Http\Message\ResponseInterface;
 
 /** Рендер заглушка
  *
  */
 final class NullRender implements RenderInterface
 {
-    public function render(httpResponse $httpResponse): void
+    public function render(ResponseInterface $httpResponse): void
     {
         // TODO: Implement render() method.
     }

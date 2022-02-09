@@ -2,7 +2,7 @@
 
 namespace EfTech\BookLibrary\Infrastructure\View;
 
-use EfTech\BookLibrary\Infrastructure\http\httpResponse;
+use Psr\Http\Message\ResponseInterface;
 
 /** Логика отображения ответа пользователя по умолчанию
  *
@@ -10,13 +10,13 @@ use EfTech\BookLibrary\Infrastructure\http\httpResponse;
 final class DefaultRender implements RenderInterface
 {
     /**
-     * @param httpResponse $httpResponse
+     * @param ResponseInterface $httpResponse $httpResponse
      * @return void
      */
-    public function render(httpResponse $httpResponse): void
+    public function render(ResponseInterface $httpResponse): void
     {
         foreach ($httpResponse->getHeaders() as $headerName => $headerValue) {
-            header("$headerName: $headerValue");
+            header("$headerName: {$httpResponse->getHeaderLine($headerName)}}");
         }
         http_response_code($httpResponse->getStatusCode());
         echo $httpResponse->getBody();

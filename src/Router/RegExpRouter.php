@@ -3,7 +3,7 @@
 namespace EfTech\BookLibrary\Infrastructure\Router;
 
 use EfTech\BookLibrary\Infrastructure\Controller\ControllerInterface;
-use EfTech\BookLibrary\Infrastructure\http\ServerRequest;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Роутер сопоставляющий регулярные выражения и обработчик
@@ -34,7 +34,7 @@ final class RegExpRouter implements RouterInterface
     /**
      * @inheritDoc
      */
-    public function getDispatcher(ServerRequest $serverRequest): ?callable
+    public function getDispatcher(ServerRequestInterface $serverRequest): ?callable
     {
         $urlPath = $serverRequest->getUri()->getPath();
 
@@ -52,7 +52,10 @@ final class RegExpRouter implements RouterInterface
                 }
                 if (null !== $dispatcher) {
                     $serverRequestAttributes = $this->buildServersRequestAttributes($matches);
-                    $serverRequest->setAttributes($serverRequestAttributes);
+                    foreach ($serverRequestAttributes as $serverRequestAttributeName => $serverRequestAttributeValue) {
+                        //TODO помнить про имутабельность
+                        $serverRequest->withAttribute($serverRequestAttributeName, $serverRequestAttributeValue);
+                    }
                     break;
                 }
             }
@@ -78,6 +81,7 @@ final class RegExpRouter implements RouterInterface
 
     /** Получать имя аттрибута
      * @param string $groupName
+     * @return string
      */
     private function buildAttrName(string $groupName): string
     {

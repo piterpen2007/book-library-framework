@@ -54,14 +54,14 @@ class ServerRequestFactory
      */
     public static function createFromGlobals(array $globalServer, string $body = null): ServerRequest
     {
-        self::validateRequiredFields($globalServer);
-        self::httpValidateMethod($globalServer['REQUEST_METHOD']);
-
-        $method = $globalServer['REQUEST_METHOD'];
-        $requestTarget = $globalServer['REQUEST_URI'];
-        $protocolVersion = self::extractProtocolVersion($globalServer['SERVER_PROTOCOL']);
-        $uri = Uri::createFromString(self::buildUrl($globalServer));
-        $headers = self::extractHeaders($globalServer);
+//        self::validateRequiredFields($globalServer);
+//        self::httpValidateMethod($globalServer['REQUEST_METHOD']);
+//
+//        $method = $globalServer['REQUEST_METHOD'];
+//        $requestTarget = $globalServer['REQUEST_URI'];
+//        $protocolVersion = self::extractProtocolVersion($globalServer['SERVER_PROTOCOL']);
+//        $uri = Uri::createFromString(self::buildUrl($globalServer));
+//        $headers = self::extractHeaders($globalServer);
 
         return new ServerRequest($method, $protocolVersion, $requestTarget, $uri, $headers, $body);
     }

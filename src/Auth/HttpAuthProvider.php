@@ -6,6 +6,8 @@ use EfTech\BookLibrary\Infrastructure\http\httpResponse;
 use EfTech\BookLibrary\Infrastructure\http\ServerResponseFactory;
 use EfTech\BookLibrary\Infrastructure\Session\SessionInterface;
 use EfTech\BookLibrary\Infrastructure\Uri\Uri;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\UriInterface;
 
 /**
  * Поставщик услуги аутификации
@@ -18,17 +20,17 @@ class HttpAuthProvider
     private const USER_ID = 'user_id';
     private UserDataStorageInterface $userDataStorage;
     private SessionInterface $session;
-    private Uri $loginUri;
+    private UriInterface $loginUri;
 
     /**
      * @param UserDataStorageInterface $userDataStorage
      * @param SessionInterface $session
-     * @param Uri $loginUri
+     * @param UriInterface $loginUri
      */
     public function __construct(
         UserDataStorageInterface $userDataStorage,
-        \EfTech\BookLibrary\Infrastructure\Session\SessionInterface $session,
-        \EfTech\BookLibrary\Infrastructure\Uri\Uri $loginUri
+        SessionInterface $session,
+        UriInterface $loginUri
     ) {
         $this->userDataStorage = $userDataStorage;
         $this->session = $session;
@@ -50,16 +52,16 @@ class HttpAuthProvider
         }
         return $isAuth;
     }
-    private function getLoginUri(): Uri
+    private function getLoginUri(): UriInterface
     {
         return $this->loginUri;
     }
 
     /** Запускает процесс аутентификации
-     * @param Uri $successUri
-     * @return httpResponse
+     * @param UriInterface $successUri
+     * @return ResponseInterface
      */
-    public function doAuth(Uri $successUri): httpResponse
+    public function doAuth(UriInterface $successUri): ResponseInterface
     {
         $loginUri = $this->getLoginUri();
         $loginQueryStr = $loginUri->getQuery();
@@ -67,15 +69,8 @@ class HttpAuthProvider
         $loginQuery = [];
         parse_str($loginQueryStr, $loginQuery);
         $loginQuery['redirect'] = (string)$successUri;
-        $uri = new Uri(
-            $loginUri->getSchema(),
-            $loginUri->getHost(),
-            $loginUri->getPort(),
-            $loginUri->getPath(),
-            http_build_query($loginQuery),
-            $loginUri->getUserInfo(),
-            $loginUri->getFragment()
-        );
+
+        $uri = $loginUri->withQuery(http_build_query($loginQuery));
 
         return ServerResponseFactory::redirect($uri);
     }

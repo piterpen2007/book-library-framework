@@ -3,7 +3,7 @@
 namespace EfTech\BookLibrary\Infrastructure\Router;
 
 use EfTech\BookLibrary\Infrastructure\Controller\ControllerInterface;
-use EfTech\BookLibrary\Infrastructure\http\ServerRequest;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
  *  Унивирсальный роутер
@@ -40,7 +40,7 @@ class UniversalRouter implements RouterInterface
     /**
      * @inheritDoc
      */
-    public function getDispatcher(ServerRequest $serverRequest): ?callable
+    public function getDispatcher(ServerRequestInterface $serverRequest): ?callable
     {
         $dispatcher = null;
         $urlPath = $serverRequest->getUri()->getPath();
@@ -73,7 +73,10 @@ class UniversalRouter implements RouterInterface
                 && is_subclass_of($fullClassName, ControllerInterface::class, true)
             ) {
                 $dispatcher = $this->controllerFactory->create($fullClassName);
-                $serverRequest->setAttributes($attr);
+                foreach ($attr as $attrName => $attrValue) {
+                    //TODO помнить про имутабельность
+                    $serverRequest->withAttribute($attrName, $attrValue);
+                }
             }
         }
         return $dispatcher;

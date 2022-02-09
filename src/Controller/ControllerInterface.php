@@ -2,8 +2,8 @@
 
 namespace EfTech\BookLibrary\Infrastructure\Controller;
 
-use EfTech\BookLibrary\Infrastructure\http\httpResponse;
-use EfTech\BookLibrary\Infrastructure\http\ServerRequest;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 /** Интерфейс контроллера
  *
@@ -11,8 +11,8 @@ use EfTech\BookLibrary\Infrastructure\http\ServerRequest;
 interface ControllerInterface
 {
     /** Обработка http запроса
-     * @param ServerRequest $request
-     * @return httpResponse
+     * @param ServerRequestInterface $request
+     * @return ResponseInterface
      */
-    public function __invoke(ServerRequest $request): httpResponse;
+    public function __invoke(ServerRequestInterface $request): ResponseInterface;
 }

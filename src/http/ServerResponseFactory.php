@@ -3,7 +3,8 @@
 namespace EfTech\BookLibrary\Infrastructure\http;
 
 use EfTech\BookLibrary\Infrastructure\Exception\RuntimeException;
-use EfTech\BookLibrary\Infrastructure\Uri\Uri;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\UriInterface;
 use Throwable;
 
 class ServerResponseFactory
@@ -25,9 +26,9 @@ class ServerResponseFactory
     /** Создаёт http ответ с данными
      * @param int $code
      * @param $data
-     * @return httpResponse
+     * @return ResponseInterface
      */
-    public static function createJsonResponse(int $code, $data): httpResponse
+    public static function createJsonResponse(int $code, $data): ResponseInterface
     {
         try {
             $body = json_encode($data, JSON_THROW_ON_ERROR);
@@ -44,7 +45,7 @@ class ServerResponseFactory
         return new httpResponse('1.1', ['Content-Type' => 'application/json'], $body, $code, $phrases);
     }
 
-    public static function createHtmlResponse(int $code, string $html): httpResponse
+    public static function createHtmlResponse(int $code, string $html): ResponseInterface
     {
         try {
             if (false === array_key_exists($code, self::PHRASES)) {
@@ -58,7 +59,7 @@ class ServerResponseFactory
         }
         return new httpResponse('1.1', ['Content-Type' => 'text/html'], $html, $code, $phrases);
     }
-    public static function redirect(Uri $uri, int $httpCode = 302): httpResponse
+    public static function redirect(UriInterface $uri, int $httpCode = 302): ResponseInterface
     {
         try {
             if (!($httpCode >= 300 && $httpCode < 400)) {

@@ -3,7 +3,7 @@
 namespace EfTech\BookLibrary\Infrastructure\Router;
 
 use EfTech\BookLibrary\Infrastructure\Controller\ControllerInterface;
-use EfTech\BookLibrary\Infrastructure\http\ServerRequest;
+use Psr\Http\Message\ServerRequestInterface;
 
 final class DefaultRouter implements RouterInterface
 {
@@ -28,13 +28,12 @@ final class DefaultRouter implements RouterInterface
     }
 
     /** Возвращает обработчик запроса
-     * @param ServerRequest $serverRequest - объект серверного http запроса
+     * @param ServerRequestInterface $serverRequest - объект серверного http запроса
      * @return callable|null
      */
-    public function getDispatcher(ServerRequest $serverRequest): ?callable
+    public function getDispatcher(ServerRequestInterface $serverRequest): ?callable
     {
         $urlPath = $serverRequest->getUri()->getPath();
-
 
         $dispatcher = null;
         if (array_key_exists($urlPath, $this->handlers)) {

@@ -2,16 +2,16 @@
 
 namespace EfTech\BookLibrary\Infrastructure\HttpApplication;
 
-use EfTech\BookLibrary\Infrastructure\Exception\RuntimeException;
 use EfTech\BookLibrary\Infrastructure\DI\ContainerInterface;
-use EfTech\BookLibrary\Infrastructure\http\httpResponse;
-use EfTech\BookLibrary\Infrastructure\http\ServerRequest;
+use EfTech\BookLibrary\Infrastructure\Exception;
+use EfTech\BookLibrary\Infrastructure\Exception\RuntimeException;
 use EfTech\BookLibrary\Infrastructure\http\ServerResponseFactory;
 use EfTech\BookLibrary\Infrastructure\Logger\LoggerInterface;
 use EfTech\BookLibrary\Infrastructure\Router\RouterInterface;
-use Throwable;
-use EfTech\BookLibrary\Infrastructure\Exception;
 use EfTech\BookLibrary\Infrastructure\View\RenderInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Throwable;
 
 /**
  * Ядро приложения
@@ -153,10 +153,10 @@ final class App
     private $diContainerFactory;
 
     /** Обработчик запроса
-     * @param ServerRequest $serverRequest - объект серверного http запроса
-     * @return httpResponse - реез ответ
+     * @param ServerRequestInterface $serverRequest - объект серверного http запроса
+     * @return ResponseInterface - реез ответ
      */
-    public function dispath(ServerRequest $serverRequest): httpResponse
+    public function dispath(ServerRequestInterface $serverRequest): ResponseInterface
     {
         $hasAppConfig = false;
         try {
@@ -168,7 +168,7 @@ final class App
             $dispatcher = $this->getRouter()->getDispatcher($serverRequest);
             if (is_callable($dispatcher)) {
                 $httpResponse = $dispatcher($serverRequest);
-                if (!($httpResponse instanceof httpResponse)) {
+                if (!($httpResponse instanceof ResponseInterface)) {
                     throw new Exception\UnexpectedValueException('Контроллер вернул некорректный результат');
                 }
             } else {
@@ -203,9 +203,9 @@ final class App
     }
 
     /** Тихое отображение данных - если отправка данных пользователю закончилось ошибкой, то это никак не влияет
-     * @param httpResponse $httpResponse - http ответ
+     * @param ResponseInterface $httpResponse $httpResponse - http ответ
      */
-    private function silentRender(httpResponse $httpResponse): void
+    private function silentRender(ResponseInterface $httpResponse): void
     {
         try {
             $this->getRender()->render($httpResponse);
