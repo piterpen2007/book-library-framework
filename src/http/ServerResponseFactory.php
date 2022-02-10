@@ -3,6 +3,7 @@
 namespace EfTech\BookLibrary\Infrastructure\http;
 
 use EfTech\BookLibrary\Infrastructure\Exception\RuntimeException;
+use Nyholm\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriInterface;
 use Throwable;
@@ -42,7 +43,7 @@ class ServerResponseFactory
             $code = 520;
             $phrases = 'Unknown error';
         }
-        return new httpResponse('1.1', ['Content-Type' => 'application/json'], $body, $code, $phrases);
+        return new Response($code, ['Content-Type' => 'application/json'], $body, '1.1', $phrases);
     }
 
     public static function createHtmlResponse(int $code, string $html): ResponseInterface
@@ -57,7 +58,7 @@ class ServerResponseFactory
             $code = 520;
             $phrases = 'Unknown Error';
         }
-        return new httpResponse('1.1', ['Content-Type' => 'text/html'], $html, $code, $phrases);
+        return new Response($code, ['Content-Type' => 'application/json'], $html, '1.1', $phrases);
     }
     public static function redirect(UriInterface $uri, int $httpCode = 302): ResponseInterface
     {
@@ -77,6 +78,6 @@ class ServerResponseFactory
             $phrases = 'Unknown Error';
             $headers = ['Content-Type' => 'text/html'];
         }
-        return new httpResponse('1.1', $headers, $body, $httpCode, $phrases);
+        return new Response($httpCode, $headers, $body, '1.1', $phrases);
     }
 }
