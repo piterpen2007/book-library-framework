@@ -17,11 +17,7 @@ use EfTechBookLibraryCachedContainer;
  */
 class SymfonyDiContainerInit
 {
-    /** путь до конфина описывающий сервисы приложения
-     * @var string
-     */
-    private string $path;
-    private array $parameters;
+
     /** Параметры отвечающие за кеширование
      * @var CacheParams
      */

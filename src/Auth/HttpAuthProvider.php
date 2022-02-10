@@ -2,10 +2,8 @@
 
 namespace EfTech\BookLibrary\Infrastructure\Auth;
 
-use EfTech\BookLibrary\Infrastructure\http\httpResponse;
 use EfTech\BookLibrary\Infrastructure\http\ServerResponseFactory;
 use EfTech\BookLibrary\Infrastructure\Session\SessionInterface;
-use EfTech\BookLibrary\Infrastructure\Uri\Uri;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriInterface;
 
