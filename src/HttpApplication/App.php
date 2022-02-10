@@ -18,6 +18,12 @@ use Throwable;
  */
 final class App
 {
+    /**
+     *
+     * Фабрика для создания http ответов
+     * @var null|ServerResponseFactory
+     */
+    private ?ServerResponseFactory $serverResponseFactory = null;
     /** Конфиг приложения
      * @var AppConfigInterface|null
      */
@@ -57,6 +63,18 @@ final class App
         $this->diContainerFactory = $diContainerFactory;
         $this->initErrorHandling();
     }
+
+    /**
+     * @return ServerResponseFactory
+     */
+    public function getServerResponseFactory(): ServerResponseFactory
+    {
+        if (null === $this->serverResponseFactory) {
+            $this->serverResponseFactory = $this->getContainer()->get(ServerResponseFactory::class);
+        }
+        return $this->serverResponseFactory;
+    }
+
 
     /** Возвращает роутер
      * @return RouterInterface
@@ -154,9 +172,9 @@ final class App
 
     /** Обработчик запроса
      * @param ServerRequestInterface $serverRequest - объект серверного http запроса
-     * @return ResponseInterface - реез ответ
+     * @return null|ResponseInterface - реез ответ
      */
-    public function dispath(ServerRequestInterface $serverRequest): ResponseInterface
+    public function dispath(ServerRequestInterface $serverRequest): ?ResponseInterface
     {
         $hasAppConfig = false;
         try {
@@ -172,18 +190,14 @@ final class App
                     throw new Exception\UnexpectedValueException('Контроллер вернул некорректный результат');
                 }
             } else {
-                $httpResponse = ServerResponseFactory::createJsonResponse(
+                $httpResponse = $this->getServerResponseFactory()->createJsonResponse(
                     404,
                     ['status' => 'fail', 'message' => 'unsupported request']
                 );
             }
             $this->getRender()->render($httpResponse);
         } catch (Exception\InvalidDataStructureException $e) {
-            $httpResponse = ServerResponseFactory::createJsonResponse(
-                503,
-                ['status' => 'fail', 'message' => $e->getMessage()]
-            );
-            $this->silentRender($httpResponse);
+            $httpResponse = $this->silentRender(503, ['status' => 'fail', 'message' => $e->getMessage()]);
         } catch (Throwable $e) {
             $errMsg = ($hasAppConfig && !$this->getAppConfig()->isHideErrorMsg())
                 || $e instanceof Exception\ErrorCreateAppConfigException
@@ -191,27 +205,30 @@ final class App
                 : 'system error';
 
             $this->silentLog($e->getMessage());
-
-            $httpResponse = ServerResponseFactory::createJsonResponse(
-                500,
-                ['status' => 'fail', 'message' => $errMsg]
-            );
-            $this->silentRender($httpResponse);
+            $httpResponse = $this->silentRender(500, ['status' => 'fail', 'message' => $errMsg]);
         }
 
         return $httpResponse;
     }
 
     /** Тихое отображение данных - если отправка данных пользователю закончилось ошибкой, то это никак не влияет
-     * @param ResponseInterface $httpResponse $httpResponse - http ответ
+     * @param int $httpCode
+     * @param array $jsonData
+     * @return ResponseInterface|null
      */
-    private function silentRender(ResponseInterface $httpResponse): void
+    private function silentRender(int $httpCode, array $jsonData): ?ResponseInterface
     {
+        $httpResponse = null;
         try {
+            $httpResponse = $this->getServerResponseFactory()->createJsonResponse(
+                $httpCode,
+                $jsonData
+            );
             $this->getRender()->render($httpResponse);
         } catch (Throwable $e) {
             $this->silentLog($e->getMessage());
         }
+        return $httpResponse;
     }
 
     /** Тихое логгирование - если отправка данных пользователю закончилось ошибкой, то это никак не влияет

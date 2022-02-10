@@ -12,6 +12,7 @@ use Psr\Http\Message\UriInterface;
  */
 class HttpAuthProvider
 {
+    private ServerResponseFactory $serverResponseFactory;
     /**
      * Ключ по которому в сессии храниться id пользователя
      */
@@ -24,15 +25,18 @@ class HttpAuthProvider
      * @param UserDataStorageInterface $userDataStorage
      * @param SessionInterface $session
      * @param UriInterface $loginUri
+     * @param ServerResponseFactory $serverResponseFactory
      */
     public function __construct(
         UserDataStorageInterface $userDataStorage,
         SessionInterface $session,
-        UriInterface $loginUri
+        UriInterface $loginUri,
+        \EfTech\BookLibrary\Infrastructure\http\ServerResponseFactory $serverResponseFactory
     ) {
         $this->userDataStorage = $userDataStorage;
         $this->session = $session;
         $this->loginUri = $loginUri;
+        $this->serverResponseFactory = $serverResponseFactory;
     }
 
     public function isAuth(): bool
@@ -70,6 +74,6 @@ class HttpAuthProvider
 
         $uri = $loginUri->withQuery(http_build_query($loginQuery));
 
-        return ServerResponseFactory::redirect($uri);
+        return $this->serverResponseFactory->redirect($uri);
     }
 }

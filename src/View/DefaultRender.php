@@ -16,7 +16,7 @@ final class DefaultRender implements RenderInterface
     public function render(ResponseInterface $httpResponse): void
     {
         foreach ($httpResponse->getHeaders() as $headerName => $headerValue) {
-            header("$headerName: {$httpResponse->getHeaderLine($headerName)}}");
+            header("$headerName: {$httpResponse->getHeaderLine($headerName)}");
         }
         http_response_code($httpResponse->getStatusCode());
         echo $httpResponse->getBody();
