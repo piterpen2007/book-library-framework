@@ -10,5 +10,5 @@ interface RouterInterface
      * @param ServerRequestInterface $serverRequest - объект серверного http запроса
      * @return callable|null
      */
-    public function getDispatcher(ServerRequestInterface $serverRequest): ?callable;
+    public function getDispatcher(ServerRequestInterface &$serverRequest): ?callable;
 }

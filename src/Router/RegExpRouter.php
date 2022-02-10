@@ -34,7 +34,7 @@ final class RegExpRouter implements RouterInterface
     /**
      * @inheritDoc
      */
-    public function getDispatcher(ServerRequestInterface $serverRequest): ?callable
+    public function getDispatcher(ServerRequestInterface &$serverRequest): ?callable
     {
         $urlPath = $serverRequest->getUri()->getPath();
 
@@ -52,9 +52,10 @@ final class RegExpRouter implements RouterInterface
                 }
                 if (null !== $dispatcher) {
                     $serverRequestAttributes = $this->buildServersRequestAttributes($matches);
+
                     foreach ($serverRequestAttributes as $serverRequestAttributeName => $serverRequestAttributeValue) {
-                        //TODO помнить про имутабельность
-                        $serverRequest->withAttribute($serverRequestAttributeName, $serverRequestAttributeValue);
+                        $serverRequest =
+                            $serverRequest->withAttribute($serverRequestAttributeName, $serverRequestAttributeValue);
                     }
                     break;
                 }

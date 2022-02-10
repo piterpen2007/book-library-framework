@@ -40,7 +40,7 @@ class UniversalRouter implements RouterInterface
     /**
      * @inheritDoc
      */
-    public function getDispatcher(ServerRequestInterface $serverRequest): ?callable
+    public function getDispatcher(ServerRequestInterface &$serverRequest): ?callable
     {
         $dispatcher = null;
         $urlPath = $serverRequest->getUri()->getPath();
@@ -74,8 +74,7 @@ class UniversalRouter implements RouterInterface
             ) {
                 $dispatcher = $this->controllerFactory->create($fullClassName);
                 foreach ($attr as $attrName => $attrValue) {
-                    //TODO помнить про имутабельность
-                    $serverRequest->withAttribute($attrName, $attrValue);
+                    $serverRequest =  $serverRequest->withAttribute($attrName, $attrValue);
                 }
             }
         }
