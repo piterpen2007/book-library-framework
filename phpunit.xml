@@ -5,6 +5,7 @@
          cacheResultFile="var/cache/phpunit/test-results"
          executionOrder="depends,defects"
          forceCoversAnnotation="false"
+         processIsolation = "true"
          beStrictAboutCoversAnnotation="true"
          beStrictAboutOutputDuringTests="true"
          beStrictAboutTodoAnnotatedTests="true"
