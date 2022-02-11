@@ -6,7 +6,7 @@ use EfTech\BookLibrary\Infrastructure\DI\ContainerInterface;
 use EfTech\BookLibrary\Infrastructure\Exception;
 use EfTech\BookLibrary\Infrastructure\Exception\RuntimeException;
 use EfTech\BookLibrary\Infrastructure\http\ServerResponseFactory;
-use EfTech\BookLibrary\Infrastructure\Logger\LoggerInterface;
+use Psr\Log\LoggerInterface;
 use EfTech\BookLibrary\Infrastructure\Router\RouterInterface;
 use EfTech\BookLibrary\Infrastructure\View\RenderInterface;
 use Psr\Http\Message\ResponseInterface;
