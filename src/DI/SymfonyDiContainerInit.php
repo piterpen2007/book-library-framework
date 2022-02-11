@@ -4,7 +4,6 @@ namespace EfTech\BookLibrary\Infrastructure\DI;
 
 use EfTech\BookLibrary\Infrastructure\DI\SymfonyDiContainerInit\CacheParams;
 use EfTech\BookLibrary\Infrastructure\DI\SymfonyDiContainerInit\ContainerParams;
-use EfTech\BookLibrary\Infrastructure\Router\SymfonyDi\DiRouterExt;
 use Exception;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
