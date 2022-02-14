@@ -39,7 +39,8 @@
     "psr/http-message-implementation": "^1.0",
     "psr/http-factory": "^1.0",
     "psr/http-factory-implementation": "^1.0",
-    "psr/log": "^1.1"
+    "psr/log": "^1.1",
+    "twig/twig": "^v3.3"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
