@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation = "http://symfony.com/schema/dic/services  http://symfony.com/schema/dic/services/services-1.0.xsd"
+>
+<services>
+    <service id="EfTech\BookLibrary\Infrastructure\ViewTemplate\ViewTemplateInterface"
+             alias="EfTech\BookLibrary\Infrastructure\ViewTemplate\TwigTemplate"/>
+
+    <service id="EfTech\BookLibrary\Infrastructure\ViewTemplate\TwigTemplate">
+        <argument key="$pathToTemplates">%kernel.project_dir/templates/%</argument>
+        <argument key="$cacheDir">%kernel.project_dir%/var/cache/twig</argument>
+        <argument key="$debug">true</argument>
+    </service>
+
+</services>
+
+
+</container>
