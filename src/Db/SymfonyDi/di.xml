@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation = "http://symfony.com/schema/dic/services  http://symfony.com/schema/dic/services/services-1.0.xsd"
+>
+        <services>
+            <prototype namespace="EfTech\BookLibrary\Infrastructure\Db\"
+                       resource="./../"
+                       autowire="true"
+            />
+
+
+            <service id="EfTech\BookLibrary\Infrastructure\Db\ConnectionInterface"
+                     alias="EfTech\BookLibrary\Infrastructure\Db\ConnectionPDO"
+                     public="true"
+            />
+
+            <service id="EfTech\BookLibrary\Infrastructure\Db\Config">
+                <factory class="EfTech\BookLibrary\Infrastructure\Db\Config" method="factory"/>
+                <argument key="$config" type="collection">
+                    <argument key="dbType">%efftech.db.connect.dbType%</argument>
+                    <argument key="user">%efftech.db.connect.user%</argument>
+                    <argument key="password">%efftech.db.connect.password%</argument>
+                    <argument key="dbName">%efftech.db.connect.dbName%</argument>
+                    <argument key="host">%efftech.db.connect.host%</argument>
+                    <argument key="port">%efftech.db.connect.port%</argument>
+                    <argument key="options">%efftech.db.connect.options%</argument>
+                </argument>
+            </service>
+        </services>
+
+</container>

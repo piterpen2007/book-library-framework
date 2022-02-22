@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:e_db="https://effective-group.ru/schema/dic/eff_tech_infrastructure_db"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+           http://symfony.com/schema/dic/services/services-1.0.xsd
+           https://effective-group.ru/schema/dic/eff_tech_infrastructure_db">
+    <e_db:config>
+        <e_db:connect>
+            <e_db:dbType>pgsql</e_db:dbType>
+            <e_db:user>postgres</e_db:user>
+            <e_db:password>******</e_db:password>
+            <e_db:dbName>*****</e_db:dbName>
+            <e_db:host>localhost</e_db:host>
+            <e_db:port>5432</e_db:port>
+            <e_db:option name="a1"></e_db:option>
+            <e_db:option name="a2"></e_db:option>
+            <e_db:option name="a3"></e_db:option>
+        </e_db:connect>
+    </e_db:config>
+</container>
