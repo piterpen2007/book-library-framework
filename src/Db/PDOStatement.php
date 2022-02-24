@@ -30,4 +30,9 @@ class PDOStatement implements StatementInterface
     {
         return $this->statement->rowCount();
     }
+
+    public function execute(array $param): bool
+    {
+        return $this->statement->execute($param);
+    }
 }

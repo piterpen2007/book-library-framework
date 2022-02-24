@@ -21,4 +21,12 @@ interface StatementInterface
      * @return int
      */
     public function rowCount(): int;
+
+    /**
+     *  Выполняет подготовленный запрос
+     *
+     * @param array $param - параметры запроса
+     * @return bool - флаг, определяющий успешность запроса
+     */
+    public function execute(array $param): bool;
 }

@@ -47,4 +47,15 @@ class ConnectionPDO implements ConnectionInterface
 
         return new PDOStatement($statement);
     }
+
+    /**
+     * @param string $sql
+     * @return StatementInterface
+     */
+    public function prepare(string $sql): StatementInterface
+    {
+        $statementPdo = $this->getPdo()->prepare($sql);
+
+        return new PDOStatement($statementPdo);
+    }
 }
