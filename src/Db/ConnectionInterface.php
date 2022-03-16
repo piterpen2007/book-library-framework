@@ -23,4 +23,25 @@ interface ConnectionInterface
      * @return StatementInterface - результат запроса
      */
     public function prepare(string $sql): StatementInterface;
+
+    /**
+     * Открывает транзакцию
+     *
+     * @return bool
+     */
+    public function beginTransaction(): bool;
+    /**
+     * Фиксирует транзакцию
+     *
+     * @return bool
+     */
+    public function commit(): bool;
+
+    /**
+     * Откатывает транзакцию
+     *
+     *
+     * @return bool
+     */
+    public function rollBack(): bool;
 }

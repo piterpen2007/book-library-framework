@@ -17,7 +17,7 @@ class ConnectionPDO implements ConnectionInterface
     private ?PDO $pdo = null;
 
     /**
-     * @return PDO|null
+     * @return PDO
      */
     public function getPdo(): PDO
     {
@@ -57,5 +57,30 @@ class ConnectionPDO implements ConnectionInterface
         $statementPdo = $this->getPdo()->prepare($sql);
 
         return new PDOStatement($statementPdo);
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function beginTransaction(): bool
+    {
+        return $this->getPdo()->beginTransaction();
+    }
+
+    /**
+     * @return bool
+     */
+    public function commit(): bool
+    {
+        return $this->getPdo()->commit();
+    }
+
+    /**
+     * @return bool
+     */
+    public function rollBack(): bool
+    {
+        return $this->getPdo()->rollBack();
     }
 }
