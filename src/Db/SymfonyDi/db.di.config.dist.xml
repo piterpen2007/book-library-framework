@@ -17,5 +17,14 @@
             <e_db:option name="a2"></e_db:option>
             <e_db:option name="a3"></e_db:option>
         </e_db:connect>
+
+        <e_db:orm>
+            <e_db:path></e_db:path>
+            <e_db:path></e_db:path>
+            <e_db:isDevMode></e_db:isDevMode>
+            <e_db:proxyDir></e_db:proxyDir>
+            <e_db:eventSubscriber></e_db:eventSubscriber>
+            <e_db:eventSubscriber></e_db:eventSubscriber>
+        </e_db:orm>
     </e_db:config>
 </container>

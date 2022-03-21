@@ -27,7 +27,40 @@
                     <argument key="options">%efftech.db.connect.options%</argument>
                 </argument>
             </service>
+
+
+            <service id="Doctrine\ORM\EntityManagerInterface" public="true">
+                <factory class="Doctrine\ORM\EntityManager" method="create"/>
+                <argument key="$connection" type="collection">
+                    <argument key="driver">pdo_%efftech.db.connect.dbType%</argument>
+                    <argument key="user">%efftech.db.connect.user%</argument>
+                    <argument key="password">%efftech.db.connect.password%</argument>
+                    <argument key="dbname">%efftech.db.connect.dbName%</argument>
+                    <argument key="host">%efftech.db.connect.host%</argument>
+                    <argument key="port">%efftech.db.connect.port%</argument>
+                </argument>
+                <argument key="$config" type="service">
+                    <service>
+                        <factory class="Doctrine\ORM\Tools\Setup" method="createAnnotationMetadataConfiguration"/>
+                        <argument key="$paths" type="collection">%effTech.db.orm.entityPaths%</argument>
+                        <argument key="$isDevMode">%effTech.db.orm.isDevMode%</argument>
+                        <argument key="$proxyDir">%effTech.db.orm.proxyDir%</argument>
+                        <argument key="$cache">null</argument>
+                        <argument key="$useSimpleAnnotationReader">false</argument>
+                    </service>
+                </argument>
+                <argument key="$eventManager" type="service" id="Doctrine\Common\EventManager">
+                </argument>
+            </service>
+
+            <service id="Doctrine\Common\EventManager">
+            </service>
+
+
         </services>
+
+
+
 
 
 </container>

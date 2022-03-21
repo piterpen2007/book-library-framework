@@ -24,6 +24,16 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        <xs:element name="orm">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="path" maxOccurs="unbounded" minOccurs="0"/>
+              <xs:element type="xs:string" name="isDevMode"/>
+              <xs:element type="xs:string" name="proxyDir"/>
+              <xs:element type="xs:string" name="eventSubscriber" maxOccurs="unbounded" minOccurs="0"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
