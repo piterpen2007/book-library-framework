@@ -50,8 +50,8 @@
                         <call method="setMiddlewares">
                             <argument type="collection">
                                 <argument type="service">
-                                    <service id="Doctrine\DBAL\Logging\Middleware">
-                                        <argument key="$logger" id="Psr\Log\LoggerInterface"></argument>
+                                    <service class="Doctrine\DBAL\Logging\Middleware">
+                                        <argument key="$logger" id="Psr\Log\LoggerInterface" type="service"></argument>
                                     </service>
                                 </argument>
                             </argument>
