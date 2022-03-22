@@ -47,6 +47,15 @@
                         <argument key="$proxyDir">%effTech.db.orm.proxyDir%</argument>
                         <argument key="$cache">null</argument>
                         <argument key="$useSimpleAnnotationReader">false</argument>
+                        <call method="setMiddlewares">
+                            <argument type="collection">
+                                <argument type="service">
+                                    <service id="Doctrine\DBAL\Logging\Middleware">
+                                        <argument key="$logger" id="Psr\Log\LoggerInterface"></argument>
+                                    </service>
+                                </argument>
+                            </argument>
+                        </call>
                     </service>
                 </argument>
                 <argument key="$eventManager" type="service" id="Doctrine\Common\EventManager">
