@@ -42,7 +42,7 @@
                 <argument key="$config" type="service">
                     <service>
                         <factory class="Doctrine\ORM\Tools\Setup" method="createAnnotationMetadataConfiguration"/>
-                        <argument key="$paths" type="collection">%effTech.db.orm.entityPaths%</argument>
+                        <argument key="$paths">%effTech.db.orm.entityPaths%</argument>
                         <argument key="$isDevMode">%effTech.db.orm.isDevMode%</argument>
                         <argument key="$proxyDir">%effTech.db.orm.proxyDir%</argument>
                         <argument key="$cache">null</argument>
